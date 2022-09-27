@@ -1,4 +1,4 @@
-// import { Children } from "react"
+import { Children } from "react"
 import Container from "react-bootstrap/esm/Container"
 function Layout({children}) {
   return (
@@ -8,4 +8,4 @@ function Layout({children}) {
   )
 }
 
-export default Layout
+export default Layout;

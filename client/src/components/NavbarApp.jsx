@@ -1,6 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import logo from '../assets/logo2.png'
+import logo from '../assets/logo2.png';
+import Searchbar from './Searchbar';
 function NavbarApp() {
   return (
     <Navbar bg="dark" variant="dark">
@@ -14,8 +15,11 @@ function NavbarApp() {
               className="d-inline-block align-top"
             />{' '}
             Catálogo
+            
           </Navbar.Brand>
+          
         </Container>
+        Catalogo
       </Navbar>
   );
 }

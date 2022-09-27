@@ -6,24 +6,38 @@ import { Container, Stack, Typography } from "@mui/material";
 const page_name = "Productos";
 import { ProductosList } from "../sections/@dashboard/productos/ProductosList";
 import Paginacion from "../components/Paginacion";
+import { ITEM_POR_PAGE } from "../utils/constantes";
+import Swal from 'sweetalert2';
 export function Productos() {
   const [productos, setProductos] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0)
+  
+  const loadProductos = async (page) => {
+    mostrarAlerta()
+    const {data} = await getProductos(page);
+    setProductos([]);
+      setProductos(data.data);
+      setTotalPage(data.total);
+      console.log(data);
+    Swal.close()
+  }
+  const mostrarAlerta= ()=>{
+    Swal.showLoading();
     
-
+    
+  }
   useEffect(() => {
-    async function loadProductos() {
-      const respuesta = await getProductos();
-      setProductos(respuesta.data);
-      console.log(respuesta.data);
-    }
+    
     loadProductos();
   }, []);
-  const nextHandler = ()=>{
-    console.log("next");
+  const onChangeHandler= (e,p)=>{
+    console.log(p);
+    setCurrentPage(p);
+    loadProductos(p)
+    
   }
-  const prevHandler = ()=>{
-    console.log("prev");
-  }
+  
   return (
     <Page title={page_name}>
       <Container>
@@ -31,7 +45,7 @@ export function Productos() {
           Productos
         </Typography>
         <ProductosList productos = {productos}/>
-        <Paginacion productos= {productos} nextHandler = {nextHandler} prevHandler= {prevHandler} />
+        <Paginacion onChangeHandler={onChangeHandler} total_page={totalPage}  />
       </Container>
     </Page>
   );
