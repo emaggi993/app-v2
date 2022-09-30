@@ -8,11 +8,24 @@ export const getTasks = async (req, res) => {
     const [total] = await pool.query("SELECT count(id) as total FROM productos_view ");
    
     // result['blob_imagen']= 
-    res.json({total: Math.ceil(total[0].total/itemPorPagina), itemPorPagina: itemPorPagina, data:[ ...result]});
+    res.json({total: Math.ceil(total[0].total/itemPorPagina), itemPorPagina: itemPorPagina, currentPage: parseInt(req.params.p),data:[ ...result]});
   } catch (error) {
     return res.status(500).json({ mensaje: error.message });
   }
 };
+export const getAllProducts = async (req, res) => {
+  try {
+    const [result] = await pool.query(
+      "SELECT * FROM productos_view "
+    );
+    if (result.length == 0) {
+      return res.status(404).json({ mensaje: "Producto no encontrado" });
+    }
+    res.json(result);
+  } catch (error) {
+    return res.status(500).json({ mensaje: error.message });
+  }
+}
 export const getTask = async (req, res) => {
   try {
     const [result] = await pool.query(
