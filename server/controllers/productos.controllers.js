@@ -18,6 +18,19 @@ export const getTasks = async (req, res) => {
     return res.status(500).json({ mensaje: error.message });
   }
 };
+export const getPriceProducts = async (req, res)=>{
+  try {
+    const [result] = await pool.query(
+      `SELECT * FROM products_prices_list`
+    );
+    if (result.length == 0) {
+      return res.status(404).json({ mensaje: "Producto no encontrado" });
+    }
+    res.json(result);
+  } catch (error) {
+    return res.status(500).json({ mensaje: error.message });
+  }
+}
 export const getAllProducts = async (req, res) => {
   try {
     var orderBy = req.query['orderBy'];
