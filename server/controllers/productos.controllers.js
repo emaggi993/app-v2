@@ -1,13 +1,25 @@
 import { pool } from "../db.sql.js";
 import { ORDERS, ITEM_POR_PAGINA, CATEGORY } from "../constantes.js";
 
-export const getTasks = async (req, res) => {
+export const getProductsPaginated = async (req, res) => {
   try {
-    var orderBy = req.query['orderBy'];
-    var category = req.query['category']? req.query['category']: '' ;
-    console.log("categoria", category);
-    let itemPorPagina= ITEM_POR_PAGINA;
-    let query= req.params.p >1 ? `SELECT * FROM productos_view_api ${ CATEGORY[category]? CATEGORY[category]: 'where 1=2' }  ${ ORDERS[orderBy] } limit ${(req.params.p - 1)*itemPorPagina },${itemPorPagina}`: `SELECT * FROM productos_view_api ${ CATEGORY[category]? CATEGORY[category]: 'where 1=2' }  ${ ORDERS[orderBy] } limit ${itemPorPagina}`
+    const orderBy = req.query['orderBy'];
+    const category = req.query['category'];
+    const itemPorPagina= ITEM_POR_PAGINA;
+    const pagina =  req.params.p;
+    let query = "Select * from productos_view_api ";
+    if (category){
+      query += `where categoria = '${category}' `;
+    }
+    if (orderBy){
+      query += `${ORDERS[orderBy]} `;
+    }
+    if(pagina != 1){
+      query += `limit ${(pagina - 1)*itemPorPagina },${itemPorPagina}`;
+    }else{
+      query += `limit ${itemPorPagina}`;
+    }
+    
     console.log("query", query)
     const [result] = await pool.query(query);
     const [total] = await pool.query("SELECT count(id) as total FROM productos_view_api ");
@@ -47,7 +59,7 @@ export const getAllProducts = async (req, res) => {
     return res.status(500).json({ mensaje: error.message });
   }
 }
-export const getTask = async (req, res) => {
+export const getProduct = async (req, res) => {
   try {
     const [result] = await pool.query(
       "SELECT * FROM productos_view_api where cod_articulo = ?",
