@@ -1,6 +1,15 @@
 import { pool } from "../db.sql.js";
 import { ORDERS, ITEM_POR_PAGINA, CATEGORY } from "../constantes.js";
 
+export const pingPong  = async (req, res) =>{
+  try {
+    
+    res.json("ping pong");
+  } catch (error) {
+    return res.status(500).json({ mensaje: error.message });
+  }
+}
+
 export const getProductsPaginated = async (req, res) => {
   try {
     const orderBy = req.query['orderBy'];

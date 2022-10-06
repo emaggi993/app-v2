@@ -1,6 +1,8 @@
 import { Router } from "express";
-import { getProductsPaginated, getProduct, getAllProducts, getPriceProducts } from "../controllers/productos.controllers.js";
+import { pingPong, getProductsPaginated, getProduct, getAllProducts, getPriceProducts } from "../controllers/productos.controllers.js";
 const router = Router();
+
+router.get("/api/otrosrespuestos/", pingPong);
 
 router.get("/api/otrosrespuestos/productos/pagination/:p", getProductsPaginated);
 
