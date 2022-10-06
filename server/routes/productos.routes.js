@@ -2,12 +2,12 @@ import { Router } from "express";
 import { pingPong, getProductsPaginated, getProduct, getAllProducts, getPriceProducts } from "../controllers/productos.controllers.js";
 const router = Router();
 
-router.get("/api/otrosrespuestos/", pingPong);
+router.get("/api/otrosrepuestos/", pingPong);
 
-router.get("/api/otrosrespuestos/productos/pagination/:p", getProductsPaginated);
+router.get("/api/otrosrepuestos/productos/pagination/:p", getProductsPaginated);
 
-router.get("/api/otrosrespuestos/productos/:id", getProduct);
+router.get("/api/otrosrepuestos/productos/:id", getProduct);
 
-router.get("/api/otrosrespuestos/productos", getAllProducts);
-router.get("/api/otrosrespuestos/prices_list", getPriceProducts);
+router.get("/api/otrosrepuestos/productos", getAllProducts);
+router.get("/api/otrosrepuestos/prices_list", getPriceProducts);
 export default router;
