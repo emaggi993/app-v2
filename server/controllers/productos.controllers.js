@@ -63,7 +63,7 @@ export const getAllProducts = async (req, res) => {
     if (result.length == 0) {
       return res.status(404).json({ mensaje: "Producto no encontrado" });
     }
-    res.json(result);
+    res.status(200).json(result);
   } catch (error) {
     return res.status(500).json({ mensaje: error.message });
   }
